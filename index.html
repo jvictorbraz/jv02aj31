@@ -124,15 +124,12 @@
             const dataInicial = new Date(dataInicio); 
             const agora = new Date();
 
-            // Garantir que a data de início esteja correta, com hora, minuto e segundo zerados
-            dataInicial.setHours(0, 0, 0, 0);
-            agora.setHours(0, 0, 0, 0);
-
             // Calcular a diferença de anos, meses, dias, horas e segundos
             let anos = agora.getFullYear() - dataInicial.getFullYear();
             let meses = agora.getMonth() - dataInicial.getMonth();
             let dias = agora.getDate() - dataInicial.getDate();
             let horas = agora.getHours() - dataInicial.getHours();
+            let minutos = agora.getMinutes() - dataInicial.getMinutes();
             let segundos = agora.getSeconds() - dataInicial.getSeconds();
 
             // Ajuste de meses
@@ -157,13 +154,20 @@
                 horas += 24;
             }
 
+            // Ajuste de minutos
+            if (minutos < 0) {
+                minutos += 60;
+                horas--; // Subtrai uma hora
+            }
+
             // Ajuste de segundos
             if (segundos < 0) {
                 segundos += 60;
+                minutos--; // Subtrai um minuto
             }
 
             // Gerar o texto com a diferença de tempo
-            const tempoTotal = `${meses} meses, ${dias} dias, ${horas} horas e ${segundos} segundos`;
+            const tempoTotal = `${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
 
             // Exibir tempo no contador
             document.getElementById(idContador).textContent = tempoTotal;
